@@ -7,7 +7,7 @@ public class Storeapp {
 
         boolean newTransaction = true; // Flag to manage whether to start a new transaction
 
-        while (newTransaction) { // Outer loop for the entire transaction process
+        while (newTransaction) { 
             int total = 0;
             String cart = "";
 
@@ -27,10 +27,39 @@ public class Storeapp {
             boolean makingPurchase = true; // Flag to manage the purchase loop
 
             while (makingPurchase) { // Loop for product selection and adding to cart
-                System.out.println("Type the code of the product you want to buy.");
-                int code = reader.nextInt();
-                System.out.println("How many?");
-                int quantity = reader.nextInt();
+                int code = 0;
+                boolean validCode = false;
+                while (!validCode) {
+                    try {
+                        System.out.println("Type the code of the product you want to buy.");
+                        code = reader.nextInt();
+                        if (code < 1 || code > 9) {
+                            System.out.println("Invalid code. Please enter a code between 1 and 9.");
+                        } else {
+                            validCode = true;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Invalid input. Please enter a valid product code.");
+                        reader.nextLine(); // buffer
+                    }
+                }
+
+                int quantity = 0;
+                boolean validQuantity = false;
+                while (!validQuantity) {
+                    try {
+                        System.out.println("How many?");
+                        quantity = reader.nextInt();
+                        if (quantity <= 0) {
+                            System.out.println("Quantity must be greater than 0.");
+                        } else {
+                            validQuantity = true;
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Invalid input. Please enter a valid quantity.");
+                        reader.nextLine(); // buffer
+                    }
+                }
 
                 String name = "";
                 int price = 0;
@@ -125,7 +154,7 @@ public class Storeapp {
                 cart += itemDetail + "\n";
                 System.out.println("Added to cart: " + itemDetail);
 
-                // Ask if the user wants to make another purchase
+               
                 String response = "";
                 while (!response.equalsIgnoreCase("EXIT") && !response.equalsIgnoreCase("N")) {
                     System.out.println("Do you want to make another purchase? Y/N/EXIT");
@@ -144,7 +173,7 @@ public class Storeapp {
                 }
 
                 if (!makingPurchase) {
-                    // Proceed to cart and checkout
+                   
                     System.out.println("\nCart:");
                     System.out.println(cart);
                     System.out.println("Total: P" + total);
